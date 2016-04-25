@@ -3,28 +3,25 @@ import uuid from 'node-uuid';
 import React from 'react';
 import Notes from  'components/note/Notes';
 
+// Actions & Store
+import NoteActions from 'actions/NoteActions';
+import NoteStore from 'stores/NoteStore';
+
 
 class App extends React.Component {
 
 	constructor(props){
 		super(props);
 
-		this.state = {
-			notes: [
-				{
-					id: uuid.v4(),
-					task: 'Learn Webpack'
-				},
-				{
-					id: uuid.v4(),
-					task: 'Learn React'
-				},
-				{
-					id: uuid.v4(),
-					task: 'Do laundry'
-				}
-			]
-		}
+		this.state = NoteStore.getState();
+	}
+
+	componentDidMount(){
+		NoteStore.listen(this.storedChange);
+	}
+
+	storedChange = (state) => {
+		this.setState(state);
 	}
 
 	render() {
@@ -41,46 +38,15 @@ class App extends React.Component {
 	}
 
 	handleAddNote = () => {
-		this.setState({
-			notes: this.state.notes.concat({
-				id: uuid.v4(),
-				task: 'New Task'
-			})
-		});
+		NoteActions.createNote({task: 'New Task'});
 	}
 
 	editNote = (noteId, task) => {
-		console.log(`note edited: ${noteId} - ${task}`);
-		const notes = this.state.notes;
-		const noteIndex = this.findNote(noteId);
-
-		if(noteIndex < 0) 
-			return;
-
-		notes[noteIndex].task = task;
-		this.setState({notes});
+		NoteActions.editNote({noteId, task});
 	}
 
 	deleteNote = (noteId) => {
-		console.log(`Delete note: ${noteId}`);
-		let notes = this.state.notes;
-		const noteIndex = this.findNote(noteId);
-		
-		if(noteIndex < 0)
-			return;
-
-		notes.splice(noteIndex, 1);
-		this.setState({notes});
-	}
-
-	findNote = (noteId) => {
-		const notes = this.state.notes;
-		const noteIndex = notes.findIndex((note) => note.id === noteId);
-
-		if (noteIndex < 0){
-			console.warn('Failed to find note', notes, id);
-		}
-		return noteIndex;
+		NoteActions.deleteNote(noteId);
 	}
 
 }

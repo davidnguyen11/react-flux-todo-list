@@ -73,13 +73,8 @@ module.exports = {
             actions: PATHS.srcPath + '/actions/',
             pages: PATHS.srcPath + '/pages/',
             components: PATHS.srcPath + '/components/',
-            // sources: PATHS.srcPath + '/sources/',
-            // stores: PATHS.srcPath + '/stores/',
-            // utils: PATHS.srcPath + '/utils/',
-            // assets: PATHS.srcPath + '/assets/',
-            // fonts: PATHS.srcPath + '/assets/fonts/',
-            // images: PATHS.srcPath + '/assets/images/',
-            // styles: PATHS.srcPath + '/assets/styles/'
+            utils: PATHS.srcPath + '/utils/',
+            stores: PATHS.srcPath + '/stores/',
         }
     },
     plugins: [
