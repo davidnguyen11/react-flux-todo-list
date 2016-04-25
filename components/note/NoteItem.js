@@ -22,9 +22,11 @@ class Note extends React.Component {
 	}
 
 	renderTask = () => {
+		const onDelete = this.props.onDelete;
 		return (
 			<div>
 				<span onClick={this.setEditMode}>{this.props.task}</span>
+				{onDelete ? this.renderDelete() : null}
 			</div>
 		)
 	}
@@ -38,6 +40,12 @@ class Note extends React.Component {
 					onKeyPress={this.checkEnter}
 				/>
 			</div>
+		)
+	}
+
+	renderDelete = () => {
+		return (
+			<button onClick={this.props.onDelete}>x</button>
 		)
 	}
 

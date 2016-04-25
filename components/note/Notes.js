@@ -22,6 +22,7 @@ class Notes extends React.Component {
 				<NoteItem 
 					task={note.task} 
 					onEdit={this.props.onEdit.bind(this, note.id)}
+					onDelete={this.props.onDelete.bind(this, note.id)}
 				/>
 			</li>
 		)

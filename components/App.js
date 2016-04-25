@@ -31,8 +31,11 @@ class App extends React.Component {
 		const notes = this.state.notes;
 		return (
 			<div>
-				<button onClick={this.handleAddNote}>Add note</button>
-				<Notes notes={notes} onEdit={this.editNote} />
+				<button onClick={this.handleAddNote}>+</button>
+				<Notes notes={notes} 
+					onEdit={this.editNote} 
+					onDelete={this.deleteNote}
+				/>
 			</div>
 		);
 	}
@@ -46,8 +49,38 @@ class App extends React.Component {
 		});
 	}
 
-	editNote = (nodeId, task) => {
-		console.log(`note edited: ${nodeId} - ${task}`);
+	editNote = (noteId, task) => {
+		console.log(`note edited: ${noteId} - ${task}`);
+		const notes = this.state.notes;
+		const noteIndex = this.findNote(noteId);
+
+		if(noteIndex < 0) 
+			return;
+
+		notes[noteIndex].task = task;
+		this.setState({notes});
+	}
+
+	deleteNote = (noteId) => {
+		console.log(`Delete note: ${noteId}`);
+		let notes = this.state.notes;
+		const noteIndex = this.findNote(noteId);
+		
+		if(noteIndex < 0)
+			return;
+
+		notes.splice(noteIndex, 1);
+		this.setState({notes});
+	}
+
+	findNote = (noteId) => {
+		const notes = this.state.notes;
+		const noteIndex = notes.findIndex((note) => note.id === noteId);
+
+		if (noteIndex < 0){
+			console.warn('Failed to find note', notes, id);
+		}
+		return noteIndex;
 	}
 
 }
