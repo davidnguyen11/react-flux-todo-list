@@ -16,10 +16,13 @@ class Notes extends React.Component {
 		)
 	}
 
-	renderNote(note){
+	renderNote = (note) => {
 		return (
 			<li key={note.id}>
-				<NoteItem task={note.task} />
+				<NoteItem 
+					task={note.task} 
+					onEdit={this.props.onEdit.bind(this, note.id)}
+				/>
 			</li>
 		)
 	}
